@@ -1,0 +1,95 @@
+<resources>
+    <string name="app_name">KUET Central Library</string>
+    <string name="button">Button</string>
+    <string name="kuet">KUET</string>
+    <string name="central_library">Central Library</string>
+    <string name="kuet_logo">Kuet Logo</string>
+
+    #Log In
+
+    <string name="user_id">User ID :</string>
+    <string name="password">Password :</string>
+    <string name="userid">UserID</string>
+    <string name="log_in">LOG IN</string>
+    <string name="demo_text">Demo text</string>
+
+    #Borrow List
+
+    <string name="borrowed_items">Borrowed Items :</string>
+    <string name="sample_title">Sample Title</string>
+    <string name="sample_author">Sample author</string>
+    <string name="sample_due">Sample Due</string>
+    <string name="sample_call">Sample Call</string>
+    <string name="sample_fine">Sample Fine</string>
+    <string name="renew">Renew</string>
+    <string name="renewing">Renewing…</string>
+    <string name="book_cover">Book Cover</string>
+
+    #Fine
+
+    <string name="sample_date">Sample Date</string>
+    <string name="description">Description</string>
+    <string name="amount">Amount</string>
+    <string name="outstanding">Outstanding</string>
+    <string name="total">Total</string>
+
+    #Personal Details
+
+    <string name="person_image">person image</string>
+    <string name="person_name">Person Name</string>
+    <string name="name">Name :</string>
+    <string name="library_card_number">Library Card Number :</string>
+    <string name="expiry_date">Expiry Date :</string>
+    <string name="category">Category :</string>
+    <string name="date_of_birth">Date of Birth :</string>
+    <string name="gender">Gender :</string>
+    <string name="address">Address :</string>
+    <string name="phone_number">Phone Number :</string>
+    <string name="email">Email :</string>
+
+    #Gender
+
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="non_specified">Non Specified</string>
+
+    <string name="sample_remains">Sample Remains</string>
+    <string name="remember_me">Remember me</string>
+
+    <string name="enter_guest_mode">Enter Guest Mode</string>
+    <string name="please_wait">Please wait ..</string>
+    <string name="search_hint">Enter the name of the book or author</string>
+    <string name="search">Search</string>
+    <string name="see_more">See more</string>
+    <string name="getting_search_results">Getting search results ...</string>
+    <string name="scan_card">Scan card</string>
+    <string name="print_as_pdf">Print as PDF</string>
+    <string name="due">Due</string>
+    <string name="fine">Fine</string>
+
+    #Menu List
+
+    <string-array name="options">
+
+        <item>Summary</item>
+        <item>Fines</item>
+        <item>personal details</item>
+        <item>Reading history</item>
+        <item>Search Books</item>
+        <item>Log Out</item>
+
+    </string-array>
+
+
+
+    #Scan to log in
+
+    <string-array name="logins">
+
+        <item>051607043</item>
+        <item>290106</item>
+
+    </string-array>
+
+
+</resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:id="@+id/patron_image"
+        android:layout_width="333dp"
+        android:layout_height="158dp"
+        android:layout_margin="20dp"
+        android:contentDescription="@string/person_image"
+        android:gravity="center"
+        android:src="@drawable/kuet_logo_small" />
+
+    <TextView
+            android:id="@+id/name_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/person_name"
+            android:textColor="@color/gray"
+            android:gravity="center"
+            android:textSize="20sp" />
+
+
+    <ListView
+        android:id="@+id/main_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="top"
+        android:layout_marginTop="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </ListView>
+
+</LinearLayout>
