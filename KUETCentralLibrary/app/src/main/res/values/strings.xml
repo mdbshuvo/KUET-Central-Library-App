@@ -66,6 +66,8 @@
     <string name="print_as_pdf">Print as PDF</string>
     <string name="due">Due</string>
     <string name="fine">Fine</string>
+    <string name="select_the_term">Select the term</string>
+    <string name="suggested_books">Suggested Books</string>
 
     #Menu List
 
@@ -90,6 +92,33 @@
         <item>290106</item>
         <item>051607042</item>
         <item>1110546704</item>
+
+    </string-array>
+
+    #suggestion
+
+    <string-array name="terms">
+
+        <item>First year - First term</item>
+        <item>First year - Second term</item>
+        <item>Second year - First term</item>
+        <item>Second year - Second term</item>
+        <item>Third year - First term</item>
+        <item>Third year - Second term</item>
+        <item>Fourth year - First term</item>
+        <item>Fourth year - Second term</item>
+
+    </string-array>
+
+    <string-array name="term_11">
+
+        <item>Introduction to modern Physics</item>
+
+    </string-array>
+
+    <string-array name="term_12">
+
+        <item>Let us c - by Schimdt</item>
 
     </string-array>
 

@@ -52,7 +52,7 @@ public class SearchBooksActivity extends AppCompatActivity {
 
                 if(!query.equals("")){
                     progressVis();
-                    new Bookfinder(query,null,SearchBooksActivity.this,searchList,resNum,null).execute();
+                    new Bookfinder(query.replaceAll(" ","+"),null,SearchBooksActivity.this,searchList,resNum,null).execute();
                 }
             }
         });
@@ -134,7 +134,9 @@ public class SearchBooksActivity extends AppCompatActivity {
             int lastoffset = 0;
             if(pages.first()!=null) {
                 String lastHref = pages.first().select("li").last().select("a").first().attr("href");
-                lastoffset = Integer.parseInt(lastHref.replaceAll("[\\D]", ""));
+                String lastOffStr = lastHref.replaceAll("[\\D]", "");
+                if(!lastOffStr.equals("")) lastoffset = Integer.parseInt(lastOffStr);
+                else if(offset != null) lastoffset = Integer.parseInt(offset);
             }
 
             Elements trs = table.select("tr");

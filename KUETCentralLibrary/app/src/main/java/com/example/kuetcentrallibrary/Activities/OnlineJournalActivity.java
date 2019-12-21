@@ -57,7 +57,7 @@ public class OnlineJournalActivity extends AppCompatActivity {
 
                 if(!query.equals("")){
                     progressVis();
-                    new OnlineJournalActivity.JournalFinder(query,OnlineJournalActivity.this,searchList,resNum).execute();
+                    new OnlineJournalActivity.JournalFinder(query.replaceAll(" ","+"),OnlineJournalActivity.this,searchList,resNum).execute();
                 }
             }
         });
@@ -162,9 +162,12 @@ public class OnlineJournalActivity extends AppCompatActivity {
                 SearchHolder holder = new SearchHolder();
 
                 Element imgEl = li.select("img").first();
-                holder.imageUrl = "http://dspace.kuet.ac.bd" + imgEl.attr("src");
+                if(imgEl != null)  holder.imageUrl = "http://dspace.kuet.ac.bd" + imgEl.attr("src");
+                else holder.imageUrl = "";
 
                 Element div = li.select("div.artifact-description").first();
+
+                if(div == null) continue;
 
                 Element titleA = div.select("a").first();
 

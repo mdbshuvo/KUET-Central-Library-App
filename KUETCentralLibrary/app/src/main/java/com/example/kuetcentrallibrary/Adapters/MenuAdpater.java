@@ -12,12 +12,12 @@ import android.widget.TextView;
 
 import com.example.kuetcentrallibrary.R;
 
-public class CustomAdpater extends BaseAdapter {
+public class MenuAdpater extends BaseAdapter {
     private Context context;
     private String[] options;
     private int[] menu_pic_id;
 
-    public CustomAdpater(Context context, String[] options, int[] menu_pic_id) {
+    public MenuAdpater(Context context, String[] options, int[] menu_pic_id) {
         this.context = context;
         this.options = options;
         this.menu_pic_id=menu_pic_id;

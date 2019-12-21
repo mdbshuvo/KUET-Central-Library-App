@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.SuggestionsActivity"
+    tools:context=".Activities.BookListActivity"
     android:orientation="vertical">
 
     <TextView
@@ -16,10 +16,10 @@
         android:gravity="center"
         android:background="@color/buttonBackground"
         android:padding="20sp"
-        android:text="@string/select_the_term" />
+        android:text="@string/suggested_books" />
 
     <ListView
-        android:id="@+id/suggestion_menu_list"
+        android:id="@+id/book_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

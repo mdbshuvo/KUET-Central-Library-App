@@ -15,21 +15,17 @@
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@drawable/kuet_logo_ultra_small"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true"
-        android:fullBackupContent="true">
-        <activity android:name=".Activities.SuggestionsActivity"></activity>
-        <activity android:name=".Activities.OnlineJournalActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        android:usesCleartextTraffic="true">
+        <activity android:name=".Activities.BookListActivity"></activity>
+        <activity android:name=".Activities.SuggestionsActivity">
         </activity>
+        <activity android:name=".Activities.OnlineJournalActivity"></activity>
         <activity android:name=".Activities.ScanActivity" />
         <activity android:name=".Activities.SearchBooksActivity" />
         <activity android:name=".Activities.ReadingHistoryActivity" />
@@ -43,8 +39,11 @@
         <activity
             android:name=".Activities.SplashActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        </activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter></activity>
     </application>
 
 </manifest>

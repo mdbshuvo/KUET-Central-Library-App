@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,7 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.kuetcentrallibrary.Adapters.CustomAdpater;
+import com.example.kuetcentrallibrary.Adapters.MenuAdpater;
 import com.example.kuetcentrallibrary.Auxilaries.ImageSaveRetrieve;
 import com.example.kuetcentrallibrary.Holders.CookieHolderExchange;
 import com.example.kuetcentrallibrary.Holders.DetailsHolder;
@@ -89,7 +88,7 @@ public class MenuActivity extends AppCompatActivity {
 
 
         int[] arr = {R.drawable.summary_icon,R.drawable.penalty,R.drawable.personal_details,R.drawable.reading_history,R.drawable.search_books,R.drawable.search_books,R.drawable.search_books,R.drawable.logout};
-        CustomAdpater customAdpater = new CustomAdpater(MenuActivity.this,options,arr);
+        MenuAdpater customAdpater = new MenuAdpater(MenuActivity.this,options,arr);
 
         listView.setAdapter(customAdpater);
 
