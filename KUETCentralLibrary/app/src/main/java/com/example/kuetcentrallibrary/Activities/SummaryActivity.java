@@ -214,8 +214,6 @@ public class SummaryActivity extends AppCompatActivity {
                 }
             }
 
-
-
             //Saving current state
             Gson gson = new Gson();
             String json = gson.toJson(borrowSampleHolderArrayList,holderArrayType);

@@ -21,9 +21,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        android:fullBackupContent="">
+        android:fullBackupContent="true">
         <activity android:name=".Activities.SuggestionsActivity"></activity>
-        <activity android:name=".Activities.OnlineJournalActivity" />
+        <activity android:name=".Activities.OnlineJournalActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Activities.ScanActivity" />
         <activity android:name=".Activities.SearchBooksActivity" />
         <activity android:name=".Activities.ReadingHistoryActivity" />
@@ -37,11 +43,7 @@
         <activity
             android:name=".Activities.SplashActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

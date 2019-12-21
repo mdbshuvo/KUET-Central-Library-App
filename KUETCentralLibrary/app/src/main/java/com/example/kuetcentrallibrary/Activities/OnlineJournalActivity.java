@@ -1,12 +1,18 @@
 package com.example.kuetcentrallibrary.Activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DownloadManager;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -28,7 +34,7 @@ import java.util.ArrayList;
 
 public class OnlineJournalActivity extends AppCompatActivity {
 
-    private static LinearLayout progressLayout;
+    private LinearLayout progressLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +67,11 @@ public class OnlineJournalActivity extends AppCompatActivity {
         progressLayout.setVisibility(View.VISIBLE);
     }
 
-    private static void progressInvis(){
+    private void progressInvis(){
         progressLayout.setVisibility(View.INVISIBLE);
     }
 
-    public static class JournalFinder extends AsyncTask<String, String, Document> {
+    public class JournalFinder extends AsyncTask<String, String, Document> {
         private String query;
         private Context context;
         private ListView searchList;
@@ -73,7 +79,7 @@ public class OnlineJournalActivity extends AppCompatActivity {
         private boolean noRes = false;
         private int numRes;
 
-        public JournalFinder(String query, Context context, ListView searchList, TextView resNum) {
+        JournalFinder(String query, Context context, ListView searchList, TextView resNum) {
             this.query = query;
             this.context = context;
             this.searchList = searchList;
@@ -113,9 +119,13 @@ public class OnlineJournalActivity extends AppCompatActivity {
 
                 numRes = Integer.parseInt(str2);
 
-                document = Jsoup.connect("http://dspace.kuet.ac.bd/discover?rpp="+ numRes +"&etal=0&query="+ query +"&scope=/&group_by=none&page=1")
+                url = "http://dspace.kuet.ac.bd/discover?rpp="+ numRes +"&etal=0&query="+ query +"&scope=/&group_by=none&page=1";
+
+                Document newDocument = Jsoup.connect(url)
                         .userAgent("Mozilla/5.0")
                         .get();
+
+                return newDocument;
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -132,7 +142,8 @@ public class OnlineJournalActivity extends AppCompatActivity {
             progressInvis();
 
             if(noRes){
-                resNum.setText("Your search returned 0 result!");
+                String string = "Your search returned 0 result!";
+                resNum.setText(string);
                 return;
             }
 
@@ -141,7 +152,7 @@ public class OnlineJournalActivity extends AppCompatActivity {
                 return;
             }
 
-            ArrayList<SearchHolder> searchHolderArrayList = new ArrayList<>();
+            final ArrayList<SearchHolder> searchHolderArrayList = new ArrayList<>();
 
             Elements uls = document.select("ul.ds-artifact-list");
             Element list = uls.last();
@@ -150,28 +161,29 @@ public class OnlineJournalActivity extends AppCompatActivity {
             for (Element li : lis) {
                 SearchHolder holder = new SearchHolder();
 
-                Element imgEl = li.selectFirst("img");
-                holder.imageUrl = imgEl.attr("src");
+                Element imgEl = li.select("img").first();
+                holder.imageUrl = "http://dspace.kuet.ac.bd" + imgEl.attr("src");
 
-                Element div = li.selectFirst("div.artifact-description");
+                Element div = li.select("div.artifact-description").first();
 
-                Element titleA = div.selectFirst("a");
+                Element titleA = div.select("a").first();
 
                 holder.title = titleA.ownText();
+                holder.bookUrl = "http://dspace.kuet.ac.bd/bitstream" + titleA.attr("href") + "/Full%20Thesis.pdf?sequence=1&isAllowed=y";
 
-                Element auth = div.selectFirst(".author");
+                Element auth = div.select(".author").first();
                 if (auth != null) {
                     holder.author = auth.text();
                 }
                 else holder.author = "Not Specified";
 
-                Element pd = div.selectFirst(".author");
+                Element pd = div.select(".publisher-date").first();
                 if (pd != null) {
                     holder.publisher = pd.text();
                 }
                 else holder.publisher = "";
 
-                Element abs = div.selectFirst(".author");
+                Element abs = div.select(".abstract").first();
                 if (abs != null) {
                     holder.callNo = abs.text();
                 }
@@ -184,8 +196,42 @@ public class OnlineJournalActivity extends AppCompatActivity {
             JournalListAdapter adapter = new JournalListAdapter(context,searchHolderArrayList,searchList);
 
             searchList.setAdapter(adapter);
+            searchList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(OnlineJournalActivity.this);
+                    builder.setTitle("Note");
+                    builder.setMessage("Do you want to download this as pdf ?");
+                    builder.setNegativeButton("No", null);
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String url = searchHolderArrayList.get(position).bookUrl;
 
-            resNum.setText("Your search returned "+numRes+ " results.");
+                            DownloadManager downloadmanager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+                            Uri uri = Uri.parse(url);
+
+                            DownloadManager.Request request = new DownloadManager.Request(uri);
+                            request.setTitle("My File");
+                            request.setDescription("Downloading");
+                            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                            request.setVisibleInDownloadsUi(false);
+//                            request.setDestinationUri(Uri.parse("\"file://Download/" + searchHolderArrayList.get(position).title.replaceAll(" ","_") + ".pdf\""));
+                            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,  "/" + searchHolderArrayList.get(position).title.replaceAll(" ","_") + ".pdf");
+
+                            if (downloadmanager != null) {
+                                downloadmanager.enqueue(request);
+                            }
+                            else Toast.makeText(OnlineJournalActivity.this, "Problem accessing download manager", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    builder.create().show();
+                }
+            });
+
+            String string = "Your search returned "+numRes+ " results.";
+            resNum.setText(string);
         }
     }
 

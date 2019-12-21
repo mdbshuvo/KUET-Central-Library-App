@@ -60,7 +60,6 @@ public class JournalListAdapter extends BaseAdapter {
         TextView textViewFine = view.findViewById(R.id.textViewFine);
         Button renewButton = view.findViewById(R.id.button);
 
-        textViewDue.setVisibility(View.GONE);
         textViewRemained.setVisibility(View.GONE);
         textViewFine.setVisibility(View.GONE);
         renewButton.setVisibility(View.GONE);
@@ -70,8 +69,8 @@ public class JournalListAdapter extends BaseAdapter {
         if(imgUrl != null) Picasso.get().load(list.get(position).imageUrl).into(imageView);
         textViewTitle.setText(list.get(position).title);
         textViewAuthor.setText(list.get(position).author);
-        textViewCall.setText(list.get(position).publisher);
-        textViewDue.setText(list.get(position).callNo);
+        textViewCall.setText(list.get(position).callNo);
+        textViewDue.setText(list.get(position).publisher);
 
         return view;
     }

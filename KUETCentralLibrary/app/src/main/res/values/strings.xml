@@ -71,15 +71,16 @@
 
     <string-array name="options">
 
-        <item>Summary</item>
-        <item>Fines</item>
-        <item>personal details</item>
-        <item>Reading history</item>
+        <item>Your summary</item>
+        <item>Your fines</item>
+        <item>Your personal details</item>
+        <item>Your reading history</item>
         <item>Search Books</item>
+        <item>Online Journals</item>
+        <item>Book Purchase Suggestion</item>
         <item>Log Out</item>
 
     </string-array>
-
 
     #Scan to log in
 
@@ -87,6 +88,8 @@
 
         <item>051607043</item>
         <item>290106</item>
+        <item>051607042</item>
+        <item>1110546704</item>
 
     </string-array>
 

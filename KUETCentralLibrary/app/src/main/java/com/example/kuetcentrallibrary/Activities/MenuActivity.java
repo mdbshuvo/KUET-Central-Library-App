@@ -73,7 +73,7 @@ public class MenuActivity extends AppCompatActivity {
         String[] options = getResources().getStringArray(R.array.options);
 
         //initializing
-        Class<?>[] classes = {SummaryActivity.class,FinesActivity.class,PersonalDetailsActivity.class,ReadingHistoryActivity.class,SearchBooksActivity.class};
+        Class<?>[] classes = {SummaryActivity.class,FinesActivity.class,PersonalDetailsActivity.class,ReadingHistoryActivity.class,SearchBooksActivity.class,OnlineJournalActivity.class,SuggestionsActivity.class};
         HashMap<String,Class<?>> mapClass = new HashMap<>();
         for(int i =0 ; i<classes.length ; i++){
             mapClass.put(options[i],classes[i]);
@@ -88,7 +88,7 @@ public class MenuActivity extends AppCompatActivity {
         }
 
 
-        int[] arr = {R.drawable.summary_icon,R.drawable.penalty,R.drawable.personal_details,R.drawable.reading_history,R.drawable.search_books,R.drawable.logout};
+        int[] arr = {R.drawable.summary_icon,R.drawable.penalty,R.drawable.personal_details,R.drawable.reading_history,R.drawable.search_books,R.drawable.search_books,R.drawable.search_books,R.drawable.logout};
         CustomAdpater customAdpater = new CustomAdpater(MenuActivity.this,options,arr);
 
         listView.setAdapter(customAdpater);

@@ -146,7 +146,7 @@ public class SearchBooksActivity extends AppCompatActivity {
 
                 String num = tds.get(1).text();
 
-                Element aTitle = td.selectFirst("a.title");
+                Element aTitle = td.select("a.title").first();
                 String sample = aTitle.text();
                 holder.title = num + " " + sample.split("/")[0];
                 holder.bookUrl = aTitle.attr("href");
