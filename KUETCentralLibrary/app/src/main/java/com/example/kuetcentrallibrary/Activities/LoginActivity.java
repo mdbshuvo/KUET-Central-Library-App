@@ -200,12 +200,12 @@ public class LoginActivity extends AppCompatActivity {
     public class Authentication extends AsyncTask<String, String, Document> {
 
         private Context context;
-        private Map<String ,String> cookies = null;
+        private Map<String ,String> cookies;
         private boolean isAutomatic;
         private String username;
         private String password;
 
-        public Authentication(Context context, Map<String, String> cookies) {
+        Authentication(Context context, Map<String, String> cookies) {
             this.context = context.getApplicationContext();
             this.cookies = cookies;
         }
@@ -287,7 +287,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("cookieValue",cookies.get(key));
 
                     String prevUser = sharedPreferences.getString("username",null);
-                    editor.putString("username",username);
+                        editor.putString("username",username);
                     editor.putString("name",name);
                     if(checkBox.isChecked())
                         editor.putString("password",password);

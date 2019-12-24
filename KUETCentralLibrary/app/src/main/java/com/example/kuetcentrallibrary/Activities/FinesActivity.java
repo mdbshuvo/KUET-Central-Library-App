@@ -41,6 +41,8 @@ public class FinesActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private Type holderArrayType;
     private LinearLayout progressLayout;
+    private Map<String ,String> cookies;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +53,7 @@ public class FinesActivity extends AppCompatActivity {
 
         setTitle("Your Fines");
         CookieHolderExchange cookieHolderExchange = null;
-        Map<String,String> cookies = null;
+        cookies = null;
 
         Intent intent = getIntent();
 
@@ -66,7 +68,7 @@ public class FinesActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("data",Context.MODE_PRIVATE);
         String json = sharedPreferences.getString("fine",null);
 
-        ListView listView = findViewById(R.id.fines_list);
+        listView = findViewById(R.id.fines_list);
         holderArrayType = new TypeToken<ArrayList<FineSampleHolder> >(){}.getType();
 
         if (json != null) {
@@ -104,27 +106,27 @@ public class FinesActivity extends AppCompatActivity {
         if(item.getItemId() == R.id.print_as_pdf) {
             createFile();
         }
+        if (item.getItemId() == R.id.refresh_button) {
+            if(cookies != null) {
+                new FineLoader(cookies,listView).execute("http://library.kuet.ac.bd:8000/cgi-bin/koha/opac-account.pl");
+            }
+        }
         return super.onOptionsItemSelected(item);
     }
 
     private static final int WRITE_REQUEST_CODE = 43;
     private void createFile() {
         Intent intent;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-            intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
 
-            // Filter to only show results that can be "opened", such as
-            // a file (as opposed to a list of contacts or timezones).
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
+        // Filter to only show results that can be "opened", such as
+        // a file (as opposed to a list of contacts or timezones).
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
 
-            // Create a file with the requested MIME type.
-            intent.setType("application/pdf");
-            intent.putExtra(Intent.EXTRA_TITLE, "Fines");
-            startActivityForResult(intent, WRITE_REQUEST_CODE);
-        }
-        else {
-            Toast.makeText(FinesActivity.this,"Sorry, Print as PDF is not supported on your device",Toast.LENGTH_LONG).show();
-        }
+        // Create a file with the requested MIME type.
+        intent.setType("application/pdf");
+        intent.putExtra(Intent.EXTRA_TITLE, "Fines");
+        startActivityForResult(intent, WRITE_REQUEST_CODE);
     }
 
     @Override
@@ -147,7 +149,7 @@ public class FinesActivity extends AppCompatActivity {
         private final ListView listView;
         private Map<String, String> cookieHolder;
 
-        public FineLoader(Map<String, String> cookies, ListView listView) {
+        FineLoader(Map<String, String> cookies, ListView listView) {
             this.cookieHolder = cookies;
             this.listView = listView;
         }

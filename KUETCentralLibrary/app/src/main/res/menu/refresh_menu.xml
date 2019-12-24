@@ -4,11 +4,6 @@
 
     <item android:id="@+id/refresh_button"
         android:title="@string/refresh"
-        app:showAsAction="ifRoom"/>
-
-    <item
-        android:id="@+id/print_as_pdf"
-        android:title="@string/print_as_pdf"
-        app:showAsAction="never" />
+        app:showAsAction="always"/>
 
 </menu>

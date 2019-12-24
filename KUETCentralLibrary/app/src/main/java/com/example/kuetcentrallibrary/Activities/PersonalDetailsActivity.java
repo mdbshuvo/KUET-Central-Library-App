@@ -1,10 +1,5 @@
 package com.example.kuetcentrallibrary.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.MediaRouteButton;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -38,6 +33,10 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class PersonalDetailsActivity extends AppCompatActivity {
 
@@ -131,28 +130,22 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             createFile();
         }
 
-
         return super.onOptionsItemSelected(item);
     }
 
     private static final int WRITE_REQUEST_CODE = 43;
     private void createFile() {
         Intent intent;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-            intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
 
-            // Filter to only show results that can be "opened", such as
-            // a file (as opposed to a list of contacts or timezones).
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
+        // Filter to only show results that can be "opened", such as
+        // a file (as opposed to a list of contacts or timezones).
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
 
-            // Create a file with the requested MIME type.
-            intent.setType("application/pdf");
-            intent.putExtra(Intent.EXTRA_TITLE, "PersonalDetails");
-            startActivityForResult(intent, WRITE_REQUEST_CODE);
-        }
-        else {
-            Toast.makeText(PersonalDetailsActivity.this,"Sorry, Print as PDF is not supported on your device",Toast.LENGTH_LONG).show();
-        }
+        // Create a file with the requested MIME type.
+        intent.setType("application/pdf");
+        intent.putExtra(Intent.EXTRA_TITLE, "PersonalDetails");
+        startActivityForResult(intent, WRITE_REQUEST_CODE);
 
     }
 
@@ -175,7 +168,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         private final Map<String, String> cookies;
         private Bitmap bitmap = null;
 
-        public PersonalLoader(Map<String, String> cookies) {
+        PersonalLoader(Map<String, String> cookies) {
             this.cookies = cookies;
         }
 

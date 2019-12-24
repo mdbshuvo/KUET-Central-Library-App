@@ -219,8 +219,8 @@ public class OnlineJournalActivity extends AppCompatActivity {
                             request.setDescription("Downloading");
                             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                             request.setVisibleInDownloadsUi(false);
-//                            request.setDestinationUri(Uri.parse("\"file://Download/" + searchHolderArrayList.get(position).title.replaceAll(" ","_") + ".pdf\""));
-                            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,  "/" + searchHolderArrayList.get(position).title.replaceAll(" ","_") + ".pdf");
+                            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,
+                                    "/" + searchHolderArrayList.get(position).title.replaceAll(" ","_") + ".pdf");
 
                             if (downloadmanager != null) {
                                 downloadmanager.enqueue(request);

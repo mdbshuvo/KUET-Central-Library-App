@@ -103,7 +103,8 @@ public class BorrowListAdapter extends BaseAdapter {
                         renewButton.setText(context.getResources().getString(R.string.renewing));
                         new Renew(renewButton).execute(list.get(i).renewUrl);
 
-                        new SummaryActivity.GetHtml(null,cookieHolder,context,list,adapter).execute("http://library.kuet.ac.bd:8000/cgi-bin/koha/opac-user.pl");
+                        new SummaryActivity.GetHtml(null,cookieHolder,context,list,adapter)
+                                .execute("http://library.kuet.ac.bd:8000/cgi-bin/koha/opac-user.pl");
                     }
                 });
 

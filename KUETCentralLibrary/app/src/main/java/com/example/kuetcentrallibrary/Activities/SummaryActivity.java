@@ -1,13 +1,13 @@
 package com.example.kuetcentrallibrary.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.MediaRouteButton;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -30,11 +30,16 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 public class SummaryActivity extends AppCompatActivity {
 
     private static Type holderArrayType;
     private static SharedPreferences sharedPreferences;
     private static LinearLayout progressLayout;
+    private Map<String, String> cookies;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +51,7 @@ public class SummaryActivity extends AppCompatActivity {
         progressLayout = findViewById(R.id.progress_bar);
 
         CookieHolderExchange cookieHolderExchange = null;
-        Map<String,String> cookies = null;
+        cookies = null;
 
         Intent intent = getIntent();
 
@@ -58,7 +63,7 @@ public class SummaryActivity extends AppCompatActivity {
             cookies = cookieHolderExchange.cookieHolder;
         }
 
-        ListView listView = findViewById(R.id.borrow_list);
+        listView = findViewById(R.id.borrow_list);
 
         //saved data load
         holderArrayType = new TypeToken<ArrayList<BorrowSampleHolder> >(){}.getType();
@@ -78,6 +83,25 @@ public class SummaryActivity extends AppCompatActivity {
             new GetHtml(listView,cookies,SummaryActivity.this,null, null)
                     .execute("http://library.kuet.ac.bd:8000/cgi-bin/koha/opac-user.pl");
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.refresh_menu,menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.refresh_button) {
+            if(cookies != null) {
+                new GetHtml(listView,cookies,SummaryActivity.this,null, null)
+                        .execute("http://library.kuet.ac.bd:8000/cgi-bin/koha/opac-user.pl");
+            }
+        }
+        return true;
     }
 
     private void progressVis(){
@@ -110,8 +134,7 @@ public class SummaryActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            if(listView == null) isFirst = false;
-            else isFirst = true;
+            isFirst = listView != null;
         }
 
         @Override
