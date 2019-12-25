@@ -214,11 +214,11 @@ public class SummaryActivity extends AppCompatActivity {
 
                     //renew
                     data =data.next();
-                    Elements renAnchor = data.select("a");
+                    Elements renAnchor = data.first().select("a");
                     borrowSampleHolder.renewUrl = "http://library.kuet.ac.bd:8000"+renAnchor.attr("href");
-                    Elements renSpan = data.select("span");
-                    borrowSampleHolder.renewText = renSpan.first().text();
+                    borrowSampleHolder.renewText = data.first().text();
 
+                    //fines
                     Elements fineTd = data.next();
                     borrowSampleHolder.fine = fineTd.text();
 

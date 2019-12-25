@@ -128,7 +128,7 @@ public class BorrowListAdapter extends BaseAdapter {
         }
 
         //offline mode
-        if(cookieHolder == null /* || renewal  available is zero*/){
+        if(cookieHolder == null  || list.get(i).renewUrl.equals("http://library.kuet.ac.bd:8000")){
             renewButton.setVisibility(View.GONE);
         }
 

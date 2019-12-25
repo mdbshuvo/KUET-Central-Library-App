@@ -3,6 +3,7 @@ package com.example.kuetcentrallibrary.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,6 +36,10 @@ public class SearchBooksActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_books);
 
+        //sent by suggestion activity
+        Intent intent = getIntent();
+        String query = intent.getStringExtra("query");
+
         final SearchView searchView = findViewById(R.id.search_bar);
         Button searchButton = findViewById(R.id.search_button);
         final ListView searchList = findViewById(R.id.search_list);
@@ -57,7 +62,20 @@ public class SearchBooksActivity extends AppCompatActivity {
             }
         });
 
+        //got here from suggestion activity
+        if (query != null) {
+            if(!query.equals("")){
+                searchView.setQuery(query,false);
+                progressVis();
+                new Bookfinder(query.replaceAll(" ","+"),null,SearchBooksActivity.this,searchList,resNum,null).execute();
+            }
+            else{
+                Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                onBackPressed();
+            }
+        }
     }
+
     private void progressVis(){
         progressLayout.setVisibility(View.VISIBLE);
     }

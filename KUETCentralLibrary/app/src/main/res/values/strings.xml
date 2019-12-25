@@ -69,6 +69,9 @@
     <string name="select_the_term">Select the term</string>
     <string name="suggested_books">Suggested Books</string>
     <string name="refresh">Refresh</string>
+    <string name="first_semester">First Semester</string>
+    <string name="second_semester">Second Semester</string>
+    <string name="demo">demo</string>
 
     #Menu List
 
@@ -100,20 +103,19 @@
 
     <string-array name="terms">
 
-        <item>First year - First term</item>
-        <item>First year - Second term</item>
-        <item>Second year - First term</item>
-        <item>Second year - Second term</item>
-        <item>Third year - First term</item>
-        <item>Third year - Second term</item>
-        <item>Fourth year - First term</item>
-        <item>Fourth year - Second term</item>
+        <item>First year</item>
+        <item>Second year</item>
+        <item>Third year</item>
+        <item>Fourth year</item>
 
     </string-array>
 
     <string-array name="term_11">
 
-        <item>Introduction to modern Physics</item>
+        <item>Introduction to modern Physics by Kenneth H. Rosen</item>
+        <item>Introductory Circuit Analysis by Robert L. Boylested</item>
+        <item>Calculas by Abu Yusuf</item>
+        <item>Alternating Current by Russel M. Kerchner</item>
 
     </string-array>
 

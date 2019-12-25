@@ -214,6 +214,8 @@ public class OnlineJournalActivity extends AppCompatActivity {
                             DownloadManager downloadmanager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
                             Uri uri = Uri.parse(url);
 
+                            //Download e 190 or up e jhamela kore
+
                             DownloadManager.Request request = new DownloadManager.Request(uri);
                             request.setTitle("My File");
                             request.setDescription("Downloading");

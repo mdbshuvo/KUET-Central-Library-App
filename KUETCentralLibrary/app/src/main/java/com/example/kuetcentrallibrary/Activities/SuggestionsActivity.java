@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kuetcentrallibrary.Adapters.SuggestionAdapter;
 import com.example.kuetcentrallibrary.R;
 
 public class SuggestionsActivity extends AppCompatActivity {
@@ -33,7 +34,7 @@ public class SuggestionsActivity extends AppCompatActivity {
         }
 
         String[] terms =  getResources().getStringArray(R.array.terms);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.suggestions_item_layout,terms);
+        SuggestionAdapter adapter = new SuggestionAdapter(this,terms);
 
         ListView listView = findViewById(R.id.suggestion_menu_list);
         listView.setAdapter(adapter);
@@ -41,15 +42,7 @@ public class SuggestionsActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(position>1){
-                    Toast.makeText(SuggestionsActivity.this, "This entry is not signed yet", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                Intent intent = new Intent(SuggestionsActivity.this,BookListActivity.class);
-                intent.putExtra("selected",position);
-
-                startActivity(intent);
+                Toast.makeText(SuggestionsActivity.this, "Please select a semeter", Toast.LENGTH_SHORT).show();
             }
         });
     }
