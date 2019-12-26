@@ -185,6 +185,8 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 Elements imgs = document.select("p.patronimage img");
                 String imgLink = "http://library.kuet.ac.bd:8000" + imgs.first().attr("src");
 
+//                String imgLink = "https://www.sciencemag.org/sites/default/files/styles/inline__450w__no_aspect/public/bird_16x9.jpg?itok=g7JCwppA";
+
 
 //                CookieStore cookieStore;
 //                CookieHandler.setDefault(new CookieManager(cookies, CookiePolicy.ACCEPT_ALL));

@@ -65,7 +65,7 @@ public class SearchBooksActivity extends AppCompatActivity {
         //got here from suggestion activity
         if (query != null) {
             if(!query.equals("")){
-                searchView.setQuery(query,false);
+                searchView.setQuery(query,true);
                 progressVis();
                 new Bookfinder(query.replaceAll(" ","+"),null,SearchBooksActivity.this,searchList,resNum,null).execute();
             }
