@@ -33,7 +33,6 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Map;
 
@@ -195,7 +194,8 @@ public class SummaryActivity extends AppCompatActivity {
             else{
                 Elements rows = table.first().select("tr");
 
-                long minDelay = 5184000 * 1000;     //max delay
+                long minDelay = 86400 * 30 * 2;     //max delay
+                minDelay*=1000;
                 long minTime = 0;
 
                 for(Element row : rows) {
@@ -261,7 +261,7 @@ public class SummaryActivity extends AppCompatActivity {
                 }
 
 //                minDelay -= ;
-                scheduleNotification(getNotification("Book renewal required "), (minDelay - 2 * 86400 * 1000), 0);
+                scheduleNotification(getNotification(), (minDelay - 2 * 86400 * 1000));
                 SharedPreferences.Editor editor = notSharedPreferences.edit();
                 editor.putString("time",(minTime - 2 * 86400 * 1000) + "");
                 editor.commit();
@@ -287,7 +287,7 @@ public class SummaryActivity extends AppCompatActivity {
             editor.apply();
         }
 
-        private void scheduleNotification(Notification notification, long delay, int id) {
+        private void scheduleNotification(Notification notification, long delay) {
 //        if(delay == 5000){
 //            Calendar calendar = Calendar.getInstance();
 //
@@ -301,7 +301,7 @@ public class SummaryActivity extends AppCompatActivity {
 //        }
 
             Intent notificationIntent = new Intent( context, NotifyReciever.class ) ;
-            notificationIntent.putExtra(NotifyReciever.NOTIFICATION_ID , id ) ;
+            notificationIntent.putExtra(NotifyReciever.NOTIFICATION_ID , 1 ) ;
             notificationIntent.putExtra(NotifyReciever.NOTIFICATION , notification) ;
             PendingIntent pendingIntent = PendingIntent. getBroadcast ( context, 0 , notificationIntent , PendingIntent. FLAG_UPDATE_CURRENT ) ;
             long futureInMillis = SystemClock.elapsedRealtime () + delay ;
@@ -309,11 +309,11 @@ public class SummaryActivity extends AppCompatActivity {
             assert alarmManager != null;
             alarmManager.set(AlarmManager. ELAPSED_REALTIME_WAKEUP , futureInMillis , pendingIntent) ;
         }
-        private Notification getNotification(String content) {
+        private Notification getNotification() {
             NotificationCompat.Builder builder = new NotificationCompat.Builder( context,
                     default_notification_channel_id ) ;
             builder.setContentTitle( "Scheduled Notification" ) ;
-            builder.setContentText(content) ;
+            builder.setContentText("Book renewal required ") ;
             builder.setSmallIcon(R.drawable.kuet_logo_ultra_small ) ;
             builder.setAutoCancel( true ) ;
             builder.setChannelId( NOTIFICATION_CHANNEL_ID ) ;

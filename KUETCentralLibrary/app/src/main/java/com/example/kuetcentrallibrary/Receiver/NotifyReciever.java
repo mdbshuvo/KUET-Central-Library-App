@@ -33,7 +33,7 @@ public class NotifyReciever extends BroadcastReceiver {
                 SharedPreferences sharedPreferences = context.getSharedPreferences("not",Context.MODE_PRIVATE);
 //                String[] strings = sharedPreferences.getString("time",null).split("/");
 
-                String time = sharedPreferences.getString("time",null);
+                String time = sharedPreferences.getString("time","0");
 
                 long now = Long.parseLong(time);
                 long current = Calendar.getInstance().getTimeInMillis();
