@@ -123,7 +123,7 @@ public class ReadingHistoryAdapter extends BaseAdapter {
             super.onPostExecute(bitmap);
 
             imageView.setImageBitmap(bitmap);
-            ImageSaveRetrieve.saveImage(context,"history_"+position,bitmap);
+            if(bitmap != null) ImageSaveRetrieve.saveImage(context,"history_"+position,bitmap);
 
             isFinishedDownload[position] = true;
         }

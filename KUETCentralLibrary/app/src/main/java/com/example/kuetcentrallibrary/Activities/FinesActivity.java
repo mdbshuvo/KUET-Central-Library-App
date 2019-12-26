@@ -229,7 +229,8 @@ public class FinesActivity extends AppCompatActivity {
             Elements tr = tfoot.select("tr");
             Elements td = tr.select("td");
 
-            String sum = td.first().text();
+            String sum = "0.00";
+            if(td.size() != 0) sum = td.first().text();
 
             FineSampleHolder footer = new FineSampleHolder();
             footer.date = " ";

@@ -1,10 +1,14 @@
 package com.example.kuetcentrallibrary.Activities;
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,6 +21,7 @@ import com.example.kuetcentrallibrary.Adapters.BorrowListAdapter;
 import com.example.kuetcentrallibrary.Holders.BorrowSampleHolder;
 import com.example.kuetcentrallibrary.Holders.CookieHolderExchange;
 import com.example.kuetcentrallibrary.R;
+import com.example.kuetcentrallibrary.Receiver.NotifyReciever;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -28,18 +33,24 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 public class SummaryActivity extends AppCompatActivity {
 
     private static Type holderArrayType;
     private static SharedPreferences sharedPreferences;
+    private static SharedPreferences notSharedPreferences;
     private static LinearLayout progressLayout;
     private Map<String, String> cookies;
     private ListView listView;
+    public static final String NOTIFICATION_CHANNEL_ID = "10001";
+    public static final String default_notification_channel_id = "default";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +80,8 @@ public class SummaryActivity extends AppCompatActivity {
         holderArrayType = new TypeToken<ArrayList<BorrowSampleHolder> >(){}.getType();
 
         sharedPreferences = getSharedPreferences("data",Context.MODE_PRIVATE);
+        notSharedPreferences = getSharedPreferences("not",Context.MODE_PRIVATE);
+
         String json = sharedPreferences.getString("summary",null);
 
         if (json != null) {
@@ -182,6 +195,9 @@ public class SummaryActivity extends AppCompatActivity {
             else{
                 Elements rows = table.first().select("tr");
 
+                long minDelay = 5184000 * 1000;     //max delay
+                long minTime = 0;
+
                 for(Element row : rows) {
                     BorrowSampleHolder borrowSampleHolder = new BorrowSampleHolder();
 
@@ -208,6 +224,25 @@ public class SummaryActivity extends AppCompatActivity {
                     Elements spanDue = data.select("span");
                     borrowSampleHolder.due = spanDue.first().text();
 
+                    String temp = borrowSampleHolder.due.substring(10);
+                    String[] date = temp.split("/");
+
+                    Calendar calendar = Calendar.getInstance(); //1577294980692 1577294980692
+
+                    calendar.set(Integer.parseInt(date[2]),Integer.parseInt(date[1]) - 1,Integer.parseInt(date[0]),9,0,0);
+
+                    calendar.getTime();
+
+                    long current =  Calendar.getInstance().getTimeInMillis();
+                    long now = calendar.getTimeInMillis();
+
+                    long delay = now - current;
+
+                    if(delay < minDelay) {
+                        minDelay = delay;
+                        minTime = now;
+                    }
+
                     //callNo
                     data = data.next();
                     borrowSampleHolder.callNo = data.first().text();
@@ -225,6 +260,11 @@ public class SummaryActivity extends AppCompatActivity {
                     borrowSampleHolderArrayList.add(borrowSampleHolder);
                 }
 
+//                minDelay -= ;
+                scheduleNotification(getNotification("Book renewal required "), (minDelay - 2 * 86400 * 1000), 0);
+                SharedPreferences.Editor editor = notSharedPreferences.edit();
+                editor.putString("time",(minTime - 2 * 86400 * 1000) + "");
+                editor.commit();
 
                 if(isFirst){
                     BorrowListAdapter borrowListAdapter = new BorrowListAdapter(context,borrowSampleHolderArrayList,cookieHolder,  false);
@@ -245,6 +285,39 @@ public class SummaryActivity extends AppCompatActivity {
             editor.putString("summary",json);
 
             editor.apply();
+        }
+
+        private void scheduleNotification(Notification notification, long delay, int id) {
+//        if(delay == 5000){
+//            Calendar calendar = Calendar.getInstance();
+//
+//            calendar.set(2019,11,25,22,45,0);
+//
+//            SharedPreferences.Editor editor = sharedPreferences.edit(); //1577287706632
+//            editor.putString("time","2019/11/25/22/45/0");
+//            editor.commit();
+//
+//            delay = (int) calendar.getTimeInMillis();
+//        }
+
+            Intent notificationIntent = new Intent( context, NotifyReciever.class ) ;
+            notificationIntent.putExtra(NotifyReciever.NOTIFICATION_ID , id ) ;
+            notificationIntent.putExtra(NotifyReciever.NOTIFICATION , notification) ;
+            PendingIntent pendingIntent = PendingIntent. getBroadcast ( context, 0 , notificationIntent , PendingIntent. FLAG_UPDATE_CURRENT ) ;
+            long futureInMillis = SystemClock.elapsedRealtime () + delay ;
+            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context. ALARM_SERVICE ) ;
+            assert alarmManager != null;
+            alarmManager.set(AlarmManager. ELAPSED_REALTIME_WAKEUP , futureInMillis , pendingIntent) ;
+        }
+        private Notification getNotification(String content) {
+            NotificationCompat.Builder builder = new NotificationCompat.Builder( context,
+                    default_notification_channel_id ) ;
+            builder.setContentTitle( "Scheduled Notification" ) ;
+            builder.setContentText(content) ;
+            builder.setSmallIcon(R.drawable.kuet_logo_ultra_small ) ;
+            builder.setAutoCancel( true ) ;
+            builder.setChannelId( NOTIFICATION_CHANNEL_ID ) ;
+            return builder.build() ;
         }
     }
 }

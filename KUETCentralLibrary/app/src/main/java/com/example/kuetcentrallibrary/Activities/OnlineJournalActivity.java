@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kuetcentrallibrary.Adapters.JournalListAdapter;
+import com.example.kuetcentrallibrary.Auxilaries.ExternalStorageVerify;
 import com.example.kuetcentrallibrary.Holders.SearchHolder;
 import com.example.kuetcentrallibrary.R;
 
@@ -225,7 +226,12 @@ public class OnlineJournalActivity extends AppCompatActivity {
                                     "/" + searchHolderArrayList.get(position).title.replaceAll(" ","_") + ".pdf");
 
                             if (downloadmanager != null) {
-                                downloadmanager.enqueue(request);
+                                if(ExternalStorageVerify.isExternalStorageWritable()){
+                                    downloadmanager.enqueue(request);
+                                }
+                                else{
+                                    Toast.makeText(context, "Storage permission denied", Toast.LENGTH_SHORT).show();
+                                }
                             }
                             else Toast.makeText(OnlineJournalActivity.this, "Problem accessing download manager", Toast.LENGTH_SHORT).show();
                         }

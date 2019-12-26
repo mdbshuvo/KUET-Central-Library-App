@@ -144,7 +144,8 @@ public class ReadingHistoryActivity extends AppCompatActivity {
                 Elements tds = tr.select("td");
 
                 Elements img = tds.get(1).select("img");
-                borrowSampleHolder.imageUrl = img.first().attr("src");
+                if(img.size() != 0) borrowSampleHolder.imageUrl = img.first().attr("src");
+                else borrowSampleHolder.imageUrl = "";
 
                 Elements titleA = tds.get(2).select("a");
                 borrowSampleHolder.title = titleA.first().text();
