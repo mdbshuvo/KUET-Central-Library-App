@@ -72,7 +72,7 @@ public class MenuActivity extends AppCompatActivity {
         String[] options = getResources().getStringArray(R.array.options);
 
         //initializing
-        Class<?>[] classes = {FinesActivity.class,PersonalDetailsActivity.class,ReadingHistoryActivity.class,SearchBooksActivity.class,OnlineJournalActivity.class,SuggestionsActivity.class};
+        Class<?>[] classes = {SummaryActivity.class,FinesActivity.class,PersonalDetailsActivity.class,ReadingHistoryActivity.class,SearchBooksActivity.class,OnlineJournalActivity.class,SuggestionsActivity.class};
         HashMap<String,Class<?>> mapClass = new HashMap<>();
         for(int i =0 ; i<classes.length ; i++){
             mapClass.put(options[i],classes[i]);

@@ -15,7 +15,7 @@ public class ImageSaveRetrieve {
     public static void saveImage(Context context, String fileName, Bitmap img){
         try {
             FileOutputStream ostream = context.openFileOutput(fileName,Context.MODE_PRIVATE);
-            img.compress(Bitmap.CompressFormat.PNG,100,ostream);
+            if(img != null) img.compress(Bitmap.CompressFormat.PNG,100,ostream);
             ostream.close();
         } catch (IOException e) {
             e.printStackTrace();

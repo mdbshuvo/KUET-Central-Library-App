@@ -77,6 +77,7 @@
 
     <string-array name="options">
 
+        <item>Your Summary</item>
         <item>Your fines</item>
         <item>Your personal details</item>
         <item>Your reading history</item>
