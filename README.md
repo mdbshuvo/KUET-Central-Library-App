@@ -3,10 +3,13 @@ It's an android app for the students of Khulna University of Engineering & Techn
 
 ## Some Screenshots
 Login view of the application:
+
 ![login-view](demo-images/library_app_ss_0.png)
 
 Scanning library card to login:
+
 ![login-scan-view](demo-images/library_app_ss_1.png)
 
 List of borrowed books:
+
 ![borrowed-view](demo-images/library_app_ss_2.png)
